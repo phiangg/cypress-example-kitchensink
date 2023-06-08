@@ -4,8 +4,8 @@ describe('Kitchen Sink', () => {
   })
 
   it('can add a todo item', () => {
-  cy.get('[data-test="new-todo"]').type('Kill Akio {enter}')
-  cy.get('.todo-list li').eq(2).should('have.text', 'Kill Akio')
+    cy.get('[data-test="new-todo"]').type('Kill Akio {enter}')
+    cy.get('.todo-list li').eq(2).should('have.text', 'Kill Akio')
   })
 
   it('can check "Walk the dog"', () => {
@@ -21,20 +21,26 @@ describe('Kitchen Sink', () => {
   })
 
   it('can clear completed', () => {
-  cy.contains('.todo-list li', 'Walk the dog')
+    cy.contains('.todo-list li', 'Walk the dog')
     .find('input[type="checkbox"]')
     .check()
     .should('be.checked');
 
-  cy.contains('button', 'Clear completed').click();
+    cy.contains('button', 'Clear completed').click();
 
-  cy.contains('.todo-list li', 'Walk the dog').should('not.exist');
-});
+    cy.contains('.todo-list li', 'Walk the dog').should('not.exist');
+  });
   
   it('can check all', () => {
     cy.get('label[for="toggle-all"]').click()
     cy.get('input[type="checkbox"]').should('be.checked')
-    })
+  })
+
+  it('can edit a todo item', () => {
+    cy.get('.todo-list li').eq(0).dblclick()
+    cy.get('.todo-list li').eq(0).find('.edit').clear().type('Kill Akio{enter}')
+    cy.get('.todo-list li').eq(0).should('have.text', 'Kill Akio')
+  })
 
 })
 

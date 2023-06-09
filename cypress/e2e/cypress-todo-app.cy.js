@@ -44,3 +44,38 @@ describe('Kitchen Sink', () => {
 
 })
 
+describe('Submit a Coupon Code', ()=> {
+  beforeEach(() => {
+    cy.visit('http://localhost:8080/commands/actions')
+  })
+
+  it('can submit a coupon code', () => {
+  cy.get('.action-form')
+  .find('[type="text"]').type('HALFOFF')
+  cy.get('.action-form').submit()
+  .next().should('contain', 'Your form has been submitted!')
+
+  })
+
+})
+
+describe('Table is Clickable', ()=> {
+  beforeEach(() => {
+    cy.visit('http://localhost:8080/commands/misc')
+  })
+
+  it('the link is correct', () => {
+    cy.url().should('eq', 'http://localhost:8080/commands/misc');
+  });
+  
+  it('table is clickable', () => {
+  cy.get('.misc-table').within(() => {
+  // ends the current chain and yields null
+  cy.contains('Cheryl').click().end()
+  // queries the entire table again
+  cy.contains('Charles').click()
+  })
+
+})
+
+})
